@@ -1,0 +1,14 @@
+- name: Second playbook for Kubernetes Tasks, task 4
+  hosts: localhost
+  user: ubuntu
+
+  tasks:
+    - name: Create deployment to Kubernetes
+      shell: 
+        cmd: kubectl create deployment coursework2 --image=jargar/coursework2:1.0
+    - name: Create the app service
+      shell:
+        cmd: kubectl expose deployment/coursework2 --type="NodePort" --port 8080 --name node-port-service
+    - name: Scale the app service
+      shell: 
+        cmd: kubectl scale deployments/coursework2 --replicas=4

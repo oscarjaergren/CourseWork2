@@ -1,0 +1,36 @@
+- name: A sample playbook header
+  hosts: localhost
+  user: ubuntu
+  become: yes
+
+  tasks:
+    - name: Install Python Ansible Dependency
+      apt:
+        update_cache: yes
+        name: python-apt
+    - name: Install apt-transport-https
+      apt:
+        update_cache: yes
+        name: apt-transport-https
+    - name: Get key from Google
+      shell: 
+        cmd: curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+    - name: Install the repository
+      shell: 
+        cmd: echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+    - name: Update the packages and install Kubectl
+      apt:
+        update_cache: yes
+        name: kubectl
+    - name: Install MiniKube
+      shell:
+        cmd: curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+    - name: Create executeable of MiniKube
+      shell:
+        cmd: chmod +x minikube
+    - name: Move the filedirectory to correct location
+      shell: 
+        cmd: mv minikube /usr/local/bin/
+    - name: Deploy MiniKube
+      become_user: ubuntu
+      command: minikube start
