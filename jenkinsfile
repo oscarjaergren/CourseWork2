@@ -3,6 +3,8 @@ pipeline {
     registry = "jargar/coursework2"
     registryCredential = 'dockerhub'
     dockerImage = ''
+    scannerHome = tool 'SonarQubeScanner'
+
   }
   agent any
   stages {
@@ -28,9 +30,6 @@ pipeline {
       }
     }
     stage('Sonarqube') {
-    environment {
-        scannerHome = tool 'SonarQubeScanner'
-    }
     steps {
         withSonarQubeEnv('sonarqube') {
             sh "${scannerHome}/bin/sonar-scanner"
@@ -38,6 +37,13 @@ pipeline {
         timeout(time: 10, unit: 'MINUTES') {
             waitForQualityGate abortPipeline: true
         }
+    }
+    stage('Deploy App To Kubernetes') {
+      steps {
+        script {
+          kubernetesDeploy(configs: hellowhale.yml", kubeconfigId: "mykubeconfig")
+	}
+      }
     }
   }
 }
