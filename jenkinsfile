@@ -37,13 +37,6 @@ pipeline {
         timeout(time: 10, unit: 'MINUTES') {
             waitForQualityGate abortPipeline: true
         }
-    }
-    stage('Deploy App To Kubernetes') {
-      steps {
-        script {
-          kubernetesDeploy(configs: hellowhale.yml", kubeconfigId: "mykubeconfig")
-	}
-      }
-    }
+     }
   }
 }
