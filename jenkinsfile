@@ -4,7 +4,6 @@ pipeline {
     registryCredential = 'dockerhub'
     dockerImage = ''
     scannerHome = tool 'SonarQubeScanner'
-
   }
   agent any
   stages {
@@ -39,4 +38,5 @@ pipeline {
         }
      }
   }
+}
 }
