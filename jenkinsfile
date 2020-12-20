@@ -3,7 +3,6 @@ pipeline {
     registry = "jargar/coursework2"
     registryCredential = 'dockerhub'
     dockerImage = ''
-
   }
   agent any
   stages {
@@ -20,7 +19,7 @@ pipeline {
           docker.withRegistry( '', registryCredential ) {
             dockerImage.push()
           }
-        }`
+        }
       }
     }
     stage('Remove Unused docker image') {
