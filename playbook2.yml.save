@@ -1,0 +1,4 @@
+- name: This is the second playbook for Kubernetes Tasks Task4
+  hosts: localhost tasks:
+  -name: Do so
+   apt
