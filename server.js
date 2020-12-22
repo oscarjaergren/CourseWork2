@@ -17,4 +17,5 @@ www.listen(8080,function () {
     startTime = new Date();;
     host = process.env.HOSTNAME;
     console.log (Started At,startTime,  Running On  ,host, n );
+    console.log ('I was here');
 });
